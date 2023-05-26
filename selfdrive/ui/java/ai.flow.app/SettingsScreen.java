@@ -32,7 +32,9 @@ public class SettingsScreen extends ScreenAdapter {
             buttonUninstall, buttonToggle, buttonCheckUpdate, buttonLogOut;
     ImageButton closeButton;
     TextButton FPToggle, LDWToggle, RHDToggle, MetricToggle,
-            recordDriverCamToggle, lanelessToggle, disengageAccToggle;
+            recordDriverCamToggle, lanelessToggle, disengageAccToggle, CustomAPI, CPUTemp;
+
+    TextField CustomAPIURL;
 
     SpriteBatch batch;
     Table rootTable, settingTable, scrollTable, currentSettingTable;
@@ -50,7 +52,7 @@ public class SettingsScreen extends ScreenAdapter {
         }
     }
 
-    public void addKeyValueTable(Table table, String key, Button value, boolean addLine) {
+    public void addKeyValueTable(Table table, String key, Actor value, boolean addLine) {
         table.add(new Label(key, appContext.skin, "default-font", "white")).left().pad(30);
         table.add(value).right().pad(30);
         if (addLine) {
@@ -105,6 +107,13 @@ public class SettingsScreen extends ScreenAdapter {
         addKeyValueTable(currentSettingTable, "Record & Upload Driver Camera", recordDriverCamToggle, true);
         addKeyValueTable(currentSettingTable, "Disable Use of LaneLines (alpha)", lanelessToggle, false);
         //addKeyValueTable(currentSettingTable, "Disengage on Accelerator Pedal", disengageAccToggle, false);
+    }
+
+    public void fillGeneralSettings(){
+        currentSettingTable.clear();
+        addKeyValueTable(currentSettingTable, "Custom API", CustomAPI, true);
+        addKeyValueTable(currentSettingTable, "Custom API URl", "CustomAPIURL", true);
+        addKeyValueTable(currentSettingTable, "Show CPU Temp", CPUTemp, false);
     }
 
     public SettingsScreen(FlowUI appContext) {
@@ -165,6 +174,16 @@ public class SettingsScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 fillToggleSettings();
+            }
+        });
+        settingTable.add(buttonToggle).pad(10).align(Align.right);
+        settingTable.row();
+
+        buttonToggle = getPaddedButton("General", appContext.skin, "no-bg-bold", 5);
+        buttonToggle.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                fillGeneralSettings();
             }
         });
         settingTable.add(buttonToggle).pad(10).align(Align.right);
@@ -296,6 +315,36 @@ public class SettingsScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 params.putBool("EndToEndToggle", lanelessToggle.isChecked());
+            }
+        });
+
+        CustomAPI = new TextButton("  ", appContext.skin, "toggle");
+        CustomAPI.setChecked(params.exists("EndToEndToggle") && params.getBool("EndToEndToggle"));
+        CustomAPI.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+
+            }
+        });
+
+        CPUTemp = new TextButton("  ", appContext.skin, "toggle");
+        CPUTemp.setChecked(params.exists("EndToEndToggle") && params.getBool("EndToEndToggle"));
+        CPUTemp.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+
+            }
+        });
+
+
+        CustomAPIURL = new TextField("  ", appContext.skin);
+        CustomAPIURL.setMessageText(" https://example.com");
+        TextButton saveButton = getPaddedButton("Save", appContext.skin, 5);
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //String customAPIURL = CustomAPIURL.getText();
+                // Perform actions with the custom API URL
             }
         });
 

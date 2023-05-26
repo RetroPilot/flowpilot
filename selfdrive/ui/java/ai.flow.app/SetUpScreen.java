@@ -35,11 +35,11 @@ public class SetUpScreen extends ScreenAdapter {
             return;
         }
 
-        if (!params.exists(fcamIntrinsicParam)){
+        /*if (!params.exists(fcamIntrinsicParam)){
            appContext.launcher.startSensorD();
-           appContext.setScreen(new CalibrationInfo(appContext, false));
+           appContext.setScreen(new CalibrationInfo(appContext, true));
            return;
-        }
+        }*/
 
         appContext.launcher.startAllD();
         appContext.setScreen(new IntroScreen(appContext));

@@ -202,14 +202,30 @@ public class OnRoadScreen extends ScreenAdapter {
     public void updateDeviceState(){
         Definitions.DeviceState.Reader deviceState = sh.recv(deviceStateTopic).getDeviceState();
         Definitions.DeviceState.ThermalStatus thermalStatus = deviceState.getThermalStatus();
+
+        PrimitiveList.Float.Reader cpuTempCReader = deviceState.getCpuTempC();
+        float[] cpuTempC = new float[cpuTempCReader.size()];
+        for (int i = 0; i < cpuTempCReader.size(); i++) {
+            cpuTempC[i] = cpuTempCReader.get(i);
+        }
+        int averageTemp = (int) calculateAverage(cpuTempC);
+
         if (thermalStatus == Definitions.DeviceState.ThermalStatus.GREEN)
-            updateStatusLabel(statusLabelTemp, "TEMP\nGOOD", StatusColors.colorStatusGood);
+            updateStatusLabel(statusLabelTemp, "TEMP\n"+averageTemp+"C", StatusColors.colorStatusGood);
         else if (thermalStatus == Definitions.DeviceState.ThermalStatus.YELLOW)
-            updateStatusLabel(statusLabelTemp, "TEMP\nHIGH", StatusColors.colorStatusWarn);
+            updateStatusLabel(statusLabelTemp, "TEMP\n"+averageTemp+"C", StatusColors.colorStatusWarn);
         else if (thermalStatus == Definitions.DeviceState.ThermalStatus.RED)
-            updateStatusLabel(statusLabelTemp, "TEMP\nCRITICAL", StatusColors.colorStatusCritical);
+            updateStatusLabel(statusLabelTemp, "TEMP\n"+averageTemp+"C", StatusColors.colorStatusCritical);
         else if (thermalStatus == Definitions.DeviceState.ThermalStatus.DANGER)
-            updateStatusLabel(statusLabelTemp, "TEMP\nDANGER", StatusColors.colorStatusCritical);
+            updateStatusLabel(statusLabelTemp, "TEMP\n"+averageTemp+"C", StatusColors.colorStatusCritical);
+    }
+
+    private float calculateAverage(float[] array) {
+        float sum = 0;
+        for (float value : array) {
+            sum += value;
+        }
+        return sum / array.length;
     }
 
     public void updateStatusLabel(Stack statusLabel, String text, float[] color){
