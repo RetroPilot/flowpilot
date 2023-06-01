@@ -34,8 +34,7 @@ public class LoadingActivity extends AppCompatActivity {
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WAKE_LOCK,
-            Manifest.permission.VIBRATE,
-            "com.termux.permission.RUN_COMMAND");
+            Manifest.permission.VIBRATE);
 
     public boolean bootComplete = false;
 
@@ -88,7 +87,7 @@ public class LoadingActivity extends AppCompatActivity {
                 }
 
                 // boot all the flowpilot daemons in non-java land.
-                bootTermux();
+                //bootTermux();
 
                 ParamsInterface params = ParamsInterface.getInstance();
                 params.getBool("F3");
