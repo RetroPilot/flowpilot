@@ -28,7 +28,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.badlogic.gdx.backends.android.AndroidFragmentApplication;
-import com.termux.shared.termux.TermuxConstants;
 import org.acra.ACRA;
 import org.acra.BuildConfig;
 import org.acra.ErrorReporter;
@@ -83,11 +82,11 @@ public class AndroidLauncher extends FragmentActivity implements AndroidFragment
 		PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ai.flow.app::wakelock");
 
 		// acquiring wakelock causes crash on some devices.
-		try {
-			wakeLock.acquire();
-		} catch (Exception e){
-			System.err.println(e);
-		}
+		// try {
+		// 	wakeLock.acquire();
+		// } catch (Exception e){
+		// 	System.err.println(e);
+		// }
 
 		// tune system for max throughput. Does this really help ?
 		//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

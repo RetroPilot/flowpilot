@@ -47,7 +47,7 @@ public class LoadingActivity extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_loading);
+        setContentView(R.layout.activity_installing);
 
         ImageView imageView = findViewById(R.id.spinner);
         Glide.with(this).load(R.drawable.spinner).into(imageView);
@@ -88,6 +88,7 @@ public class LoadingActivity extends AppCompatActivity {
 
                 // boot all the flowpilot daemons in non-java land.
                 //bootTermux();
+
 
                 ParamsInterface params = ParamsInterface.getInstance();
                 params.getBool("F3");
