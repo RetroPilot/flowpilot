@@ -20,6 +20,10 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.termux.shared.termux.TermuxConstants;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,12 +51,41 @@ public class LoadingActivity extends AppCompatActivity {
         Window window = getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_installing);
+        if (getSetupValue() == 0) {
+            setContentView(R.layout.activity_firstboot);
+        } else if (getSetupValue() == 4) {
+            setContentView(R.layout.activity_loading);
+        } else {
+            setContentView(R.layout.activity_installing);
+        }
+
+
 
         ImageView imageView = findViewById(R.id.spinner);
         Glide.with(this).load(R.drawable.spinner).into(imageView);
 
         ensureBoot();
+    }
+
+    private int getSetupValue() {
+        File file = new File("/sdcard/.setup");
+
+        try {
+            // Read the contents of the file
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            reader.close();
+
+            // Parse the content as an integer
+            int value = Integer.parseInt(line.trim());
+
+            // Check if the value equals 4
+            return value;
+        } catch (IOException | NumberFormatException e) {
+            // Handle any exceptions that occur during file reading or parsing
+            e.printStackTrace();
+            return 500;
+        }
     }
 
     private boolean checkPermissions() {

@@ -73,7 +73,7 @@ public class AndroidLauncher extends FragmentActivity implements AndroidFragment
 		}
 
 
-		HardwareManager androidHardwareManager = new AndroidHardwareManager(getWindow());
+		HardwareManager androidHardwareManager = new AndroidHardwareManager(getWindow(),appContext);
 		// keep app from dimming due to inactivity.
 		androidHardwareManager.enableScreenWakeLock(true);
 

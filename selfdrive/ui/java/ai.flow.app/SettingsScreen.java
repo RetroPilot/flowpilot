@@ -29,7 +29,8 @@ public class SettingsScreen extends ScreenAdapter {
     Stage stage;
     TextButton buttonDevice, buttonCalibrate, buttonCalibrateExtrinsic,
             buttonTraining, buttonPowerOff, buttonReboot, buttonSoftware,
-            buttonUninstall, buttonToggle, buttonCheckUpdate, buttonLogOut;
+            buttonUninstall, buttonToggle, buttonCheckUpdate, buttonLogOut,
+            buttonNetwork, buttonGeneral, buttonWiFi, buttonTether, buttonSSHKeys;
     ImageButton closeButton;
     TextButton FPToggle, LDWToggle, RHDToggle, MetricToggle,
             recordDriverCamToggle, lanelessToggle, disengageAccToggle, CustomAPI, CPUTemp;
@@ -78,6 +79,14 @@ public class SettingsScreen extends ScreenAdapter {
         addKeyValueTable(currentSettingTable, "Review Training Guide", buttonTraining, true);
         currentSettingTable.add(buttonReboot).pad(20);
         currentSettingTable.add(buttonPowerOff).pad(20);
+    }
+
+    public void fillNetworkSettings(){
+        currentSettingTable.clear();
+        addKeyValueTable(currentSettingTable, "Wi-Fi Settings", buttonWiFi, true);
+        addKeyValueTable(currentSettingTable, "Tethering Settings", buttonTether, true);
+        addKeyValueTable(currentSettingTable, "IP Address", appContext.hardwareManager.getDeviceIpAddress(), true);
+        // addKeyValueTable(currentSettingTable, "SSH Keys", buttonSSHKeys, true);
     }
 
     public void fillSoftwareSettings(){
@@ -159,14 +168,14 @@ public class SettingsScreen extends ScreenAdapter {
         settingTable.add(buttonDevice).pad(10).align(Align.right);
         settingTable.row();
 
-        buttonSoftware = getPaddedButton("Software", appContext.skin, "no-bg-bold", 5);
-        buttonSoftware.addListener(new ClickListener() {
+        buttonNetwork = getPaddedButton("Network", appContext.skin, "no-bg-bold", 5);
+        buttonNetwork.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                fillSoftwareSettings();
+                fillNetworkSettings();
             }
         });
-        settingTable.add(buttonSoftware).pad(10).align(Align.right);
+        settingTable.add(buttonNetwork).pad(10).align(Align.right);
         settingTable.row();
 
         buttonToggle = getPaddedButton("Toggles", appContext.skin, "no-bg-bold", 5);
@@ -179,14 +188,24 @@ public class SettingsScreen extends ScreenAdapter {
         settingTable.add(buttonToggle).pad(10).align(Align.right);
         settingTable.row();
 
-        buttonToggle = getPaddedButton("General", appContext.skin, "no-bg-bold", 5);
-        buttonToggle.addListener(new ClickListener() {
+        buttonSoftware = getPaddedButton("Software", appContext.skin, "no-bg-bold", 5);
+        buttonSoftware.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                fillSoftwareSettings();
+            }
+        });
+        settingTable.add(buttonSoftware).pad(10).align(Align.right);
+        settingTable.row();
+
+        buttonGeneral = getPaddedButton("General", appContext.skin, "no-bg-bold", 5);
+        buttonGeneral.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 fillGeneralSettings();
             }
         });
-        settingTable.add(buttonToggle).pad(10).align(Align.right);
+        settingTable.add(buttonGeneral).pad(10).align(Align.right);
         settingTable.row();
 
         buttonCalibrate = getPaddedButton("RESET", appContext.skin, 5);
@@ -210,6 +229,30 @@ public class SettingsScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 appContext.setScreen(new TrainingScreen(appContext));
+            }
+        });
+
+        buttonWiFi = getPaddedButton("OPEN", appContext.skin, 5);
+        buttonWiFi.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                appContext.hardwareManager.openWiFiSettings();
+            }
+        });
+
+        buttonTether = getPaddedButton("OPEN", appContext.skin, 5);
+        buttonTether.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                appContext.hardwareManager.openTetheringSettings();
+            }
+        });
+
+        buttonSSHKeys = getPaddedButton("ADD", appContext.skin, 5);
+        buttonSSHKeys.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
             }
         });
 
@@ -370,7 +413,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         fillDeviceSettings();
 
-        ButtonGroup buttonGroup = new ButtonGroup(buttonDevice, buttonSoftware, buttonToggle);
+        ButtonGroup buttonGroup = new ButtonGroup(buttonDevice, buttonSoftware, buttonToggle, buttonNetwork, buttonGeneral);
         buttonGroup.setMaxCheckCount(1);
         buttonGroup.setUncheckLast(true);
 

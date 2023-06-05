@@ -5,4 +5,13 @@ public abstract class HardwareManager {
     public void turnOffScreen(boolean doTurnOff){}
     public void enableCPUWakeLock(boolean enable){}
     public void enableScreenWakeLock(boolean enable){}
-;}
+
+    public void openWiFiSettings(){}
+
+    public void openTetheringSettings(){}
+
+    public String getDeviceIpAddress(){
+        return null;
+    }
+
+}
