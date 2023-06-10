@@ -63,3 +63,6 @@ echo "set -g mouse on" >> .tmux.conf # enable mouse scrolling in tmux
 scons
 
 success "Flowpilot successfully installed. launch using cd flowpilot && ./launch_flowpilot.sh"
+
+cd flowpilot
+./launch_flowpilot.sh

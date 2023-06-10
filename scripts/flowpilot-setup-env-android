@@ -50,9 +50,6 @@ base_setup() {
 	INSTALL_SCRIPT_URL='https://raw.githubusercontent.com/flowdriveai/flowpilot/master/scripts/install-flowpilot-android'
 	wget -q --show-progress --tries=5 $INSTALL_SCRIPT_URL -O /sdcard/flowpilot/Downloads/install-flowpilot-android
 
-	LAUNCH_SCRIPT_URL='https://raw.githubusercontent.com/flowdriveai/flowpilot/master/scripts/install-flowpilot-android'
-	wget -q --show-progress --tries=5 $LAUNCH_SCRIPT_URL -O /sdcard/flowpilot/Downloads/new_launch_flowpilot
-
 	# setup startup commands
 	add_to_file 'sshd' ~/.bashrc
 	add_to_file 'termux-wake-lock' ~/.bashrc
@@ -83,16 +80,14 @@ setup_nonroot_env() {
 setup_root_env() {
 	info "Preparing to install flowpilot root env ..."
         pkg install tsu
-        ROOTFS_TAR="ubuntu-focal-core-cloudimg-arm64-root-2020.12.10.tar.gz"
-        wget -q --show-progress --no-clobber --tries=5 https://github.com/termux/proot-distro/releases/download/v1.2-ubuntu-focal-rootfs/$ROOTFS_TAR -P /sdcard/flowpilot/Downloads/
+        ROOTFS_TAR="flowpilot-chroot.tar.gz"
+        wget -q --show-progress --no-clobber --tries=5 https://github.com/RetroPilot/flowpilot/releases/download/v0.1.0alpha2/$ROOTFS_TAR -P /sdcard/flowpilot/Downloads/
 
         CHROOT=$HOME/flowpilot_env_root
         mkdir -p $CHROOT
         sudo tar xfp /sdcard/flowpilot/Downloads/$ROOTFS_TAR -C $CHROOT
         sudo cp /sdcard/flowpilot/Downloads/install-flowpilot-android $CHROOT/bin
-		sudo cp /sdcard/flowpilot/Downloads/new_launch_flowpilot $CHROOT/bin
         sudo chmod +x $CHROOT/bin/install-flowpilot-android
-		sudo chmod +x $CHROOT/bin/new_launch_flowpilot
 
         rm -f /data/data/com.termux/files/usr/bin/login-flowpilot-root
         # Copy from https://github.com/MFDGaming/ubuntu-in-termux/blob/7daf992c9804403c4dfbab2bd23be6d81fa916db/ubuntu.sh#L65-L103
@@ -124,7 +119,7 @@ setup_root_env() {
 	    command+=\" PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games\"
 	    command+=\" TERM=\$TERM\"
 	    command+=\" LANG=C.UTF-8\"
-	    command+=\" /bin/bash new_launch_flowpilot\"
+	    command+=\" /bin/bash install-flowpilot-android\"
 	    com=\"\$@\"
 	    if [ -z \"\$1\" ];then
 		exec \$command
