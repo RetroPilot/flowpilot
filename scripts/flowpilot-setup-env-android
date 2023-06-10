@@ -92,7 +92,7 @@ setup_root_env() {
         rm -f /data/data/com.termux/files/usr/bin/login-flowpilot-root
         # Copy from https://github.com/MFDGaming/ubuntu-in-termux/blob/7daf992c9804403c4dfbab2bd23be6d81fa916db/ubuntu.sh#L65-L103
         echo "#!/data/data/com.termux/files/usr/bin/bash
-	
+
 	    # prepare mount external storage
 	    mkdir -p $CHROOT/sdcard
 
@@ -119,7 +119,7 @@ setup_root_env() {
 	    command+=\" PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games\"
 	    command+=\" TERM=\$TERM\"
 	    command+=\" LANG=C.UTF-8\"
-	    command+=\" /bin/bash --login\"
+	    command+=\" /bin/bash ./new_launch_flowpilot\"
 	    com=\"\$@\"
 	    if [ -z \"\$1\" ];then
 		exec \$command
@@ -128,6 +128,14 @@ setup_root_env() {
 	    fi
 	" >> /data/data/com.termux/files/usr/bin/login-flowpilot-root
 	chmod +x /data/data/com.termux/files/usr/bin/login-flowpilot-root
+
+	echo "#!/usr/bin/env
+
+	install-flowpilot-android
+	cd flowpilot
+	./launch_flowpilot.sh
+	" >> /data/data/com.termux/files/home/flowpilot_env_root/root/new_launch_flowpilot
+	chmod +x /data/data/com.termux/files/home/flowpilot_env_root/root/new_launch_flowpilot
 
 	echo -e "sshd \ntermux-wake-lock \nsudo login-flowpilot-root \"cd flowpilot && ANDROID_DATA='' PIP_ROOT_USER_ACTION=ignore ./launch_flowpilot.sh\"" > $HOME/boot_flowpilot
 	chmod +x $HOME/boot_flowpilot
