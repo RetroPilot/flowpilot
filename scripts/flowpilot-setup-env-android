@@ -119,7 +119,14 @@ setup_root_env() {
 	    command+=\" PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games\"
 	    command+=\" TERM=\$TERM\"
 	    command+=\" LANG=C.UTF-8\"
-	    command+=\" /bin/bash install-flowpilot-android\"
+
+		if [ \"\$1\" = \"--install\" ]; then
+		command+=\" /bin/bash install-flowpilot-android\"
+		shift
+		else
+		command+=\" /bin/bash --login\"
+		fi
+
 	    com=\"\$@\"
 	    if [ -z \"\$1\" ];then
 		exec \$command
