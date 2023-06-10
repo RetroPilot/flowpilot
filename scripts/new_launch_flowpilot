@@ -1,0 +1,5 @@
+#!/usr/bin/env
+
+install-flowpilot-android
+cd flowpilot
+./launch_flowpilot.sh
