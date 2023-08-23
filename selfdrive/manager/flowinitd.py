@@ -200,4 +200,6 @@ def main():
             cloudlog.info("cleaning up..")
             params.put_bool("FlowinitReady", False)
             manager_cleanup()
-            
+
+if __name__ == "__main__":
+  main()

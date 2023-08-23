@@ -86,7 +86,8 @@ env = Environment(
     "-Wno-c99-designator",
     "-Wno-reorder-init-list",
     "-Wno-error=unused-but-set-variable",
-    "-Wno-c++11-narrowing"
+    "-Wno-c++11-narrowing",
+    "-Wno-error=unqualified-std-cast-call",
   ] + cflags + ccflags,
 
   LINKFLAGS=ldflags,
@@ -230,7 +231,7 @@ SConscript(['selfdrive/controls/lib/lateral_mpc_lib/SConscript'])
 SConscript(['selfdrive/controls/lib/longitudinal_mpc_lib/SConscript'])
 
 SConscript(['selfdrive/locationd/SConscript'])
-SConscript(['selfdrive/boardd/SConscript'])
+#SConscript(['selfdrive/boardd/SConscript'])
 SConscript(['selfdrive/loggerd/SConscript'])
 
 if GetOption('test'):

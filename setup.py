@@ -2,11 +2,11 @@ from setuptools import setup, find_packages
 import subprocess
 
 
-def install_local(dep_path):
-    subprocess.check_call(["pip", "install", "-e", dep_path])
+#def install_local(dep_path):
+#    subprocess.check_call(["pip", "install", "-e", dep_path])
     
-def get_requirements():
-   subprocess.check_call(["pip", "install", "-r", "requirements.txt"])
+#def get_requirements():
+#   subprocess.check_call(["pip", "install", "-r", "requirements.txt"])
 
 setup(name="flowpilot",
       version="0.1.0",

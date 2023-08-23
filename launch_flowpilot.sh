@@ -1,5 +1,5 @@
 set -e
-source ./.env
+#source ./.env
 
 #export WIDE_ROAD_CAMERA_SOURCE="selfdrive/assets/tmp" # no affect on android
 export ROAD_CAMERA_SOURCE="selfdrive/assets/tmp" # no affect on android
@@ -19,14 +19,19 @@ export SIMULATION="1"
 ## android specific ##
 export USE_SNPE="0" # only works for snapdragon devices.
 
-if pgrep -x "flowinit" > /dev/null
-    then
-        echo "another instance of flowinit is already running"
-        exit
-    else
-        # start a tmux pane
-        tmux new-session -d -s "flowpilot" "scons && flowinit"
-        tmux attach -t flowpilot
-fi
+#if pgrep -x "flowinit" > /dev/null
+#    then
+#        echo "another instance of flowinit is already running"
+#        exit
+#    else
+#        # start a tmux pane
+#        tmux new-session -d -s "flowpilot" "scons && flowinit"
+#        tmux attach -t flowpilot
+#fi
 
-while true; do sleep 1; done
+flowinit
+
+#python3 selfdrive/manager/flowinitd.py
+
+
+# while true; do sleep 1; done

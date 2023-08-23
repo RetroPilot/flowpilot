@@ -10,7 +10,7 @@ cd $DIR/capnproto-java
 git checkout 81d18463a8f3c98f6d21d4eae27caaca6bace4f7
 
 make
-sudo make install
+make install
 
 cd ..
 
