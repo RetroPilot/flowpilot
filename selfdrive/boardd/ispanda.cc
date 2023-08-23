@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
         libusb_set_option(NULL, LIBUSB_OPTION_WEAK_AUTHORITY);
     #endif
     assert(!libusb_init(&context));
-    assert(!libusb_wrap_sys_device(context, (intptr_t) fd, &handle));
+    //assert(!libusb_wrap_sys_device(context, (intptr_t) fd, &handle));
     device = libusb_get_device(handle);
     assert(!libusb_get_device_descriptor(device, &desc));
 

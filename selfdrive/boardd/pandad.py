@@ -179,10 +179,10 @@ def main() -> NoReturn:
     subprocess.run(["./boardd", *panda_serials], check=True)
 
 def run():
-    if is_android() and not is_android_rooted():
-      main_android_no_root()    
-    else:
-      main()
+    #if is_android() and not is_android_rooted():
+    #  main_android_no_root()    
+    #else:
+    main()
 
 if __name__ == "__main__":
   run()

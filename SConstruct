@@ -231,7 +231,7 @@ SConscript(['selfdrive/controls/lib/lateral_mpc_lib/SConscript'])
 SConscript(['selfdrive/controls/lib/longitudinal_mpc_lib/SConscript'])
 
 SConscript(['selfdrive/locationd/SConscript'])
-#SConscript(['selfdrive/boardd/SConscript'])
+SConscript(['selfdrive/boardd/SConscript'])
 SConscript(['selfdrive/loggerd/SConscript'])
 
 if GetOption('test'):
