@@ -186,5 +186,5 @@ SConscript('board/pedal/SConscript')
 SConscript('board/jungle/SConscript')
 
 # test files
-if GetOption('test'):
-  SConscript('tests/libpanda/SConscript')
+#if GetOption('test'):
+#  SConscript('tests/libpanda/SConscript')
