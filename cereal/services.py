@@ -11,6 +11,12 @@ def new_port(port: int):
   port += STARTING_PORT
   return port + 1 if port >= RESERVED_PORT else port
 
+#class Service:
+#  def __init__(self, port: int, should_log: bool, frequency: float, decimation: Optional[int] = None):
+#    self.port = port
+#    self.should_log = should_log
+#    self.frequency = frequency
+#    self.decimation = decimation
 
 class Service:
   def __init__(self, port: int, vals):
@@ -19,13 +25,16 @@ class Service:
     self.frequency = vals.get("expectedFreq", 0.0)
     self.decimation = vals.get("decimation", None)
     self.keep_last = vals.get("keepLast", True)
-    
+
 with open(os.path.join(CEREAL_PATH, "resources/services.yaml"), 'r') as stream:
     services = yaml.safe_load(stream)["services"]
 
-service_list = {name: Service(new_port(idx), vals) for  # type: ignore
+SERVICE_LIST = {name: Service(new_port(idx), vals) for  # type: ignore
                 idx, (name, vals) in enumerate(services.items())}
 
+
+#SERVICE_LIST = {name: Service(new_port(idx), *vals) for
+#                idx, (name, vals) in enumerate(services.items())}
 
 def build_header():
   h = ""
