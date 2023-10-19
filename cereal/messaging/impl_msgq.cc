@@ -17,9 +17,13 @@ void sig_handler(int signal) {
 }
 
 static bool service_exists(std::string path){
-  return services.count(path) > 0;
+  for (const auto& it : services) {
+    if (it.name == path) {
+      return true;
+    }
+  }
+  return false;
 }
-
 
 MSGQContext::MSGQContext() {
 }
