@@ -1,12 +1,12 @@
 #pragma once
-#include "messaging.h"
+
 #include <zmq.h>
 #include <string>
-#include <map>
+#include <vector>
+
+#include "cereal/messaging/messaging.h"
 
 #define MAX_POLLERS 128
-
-extern std::map<std::string, std::string> ZMQ_PROTOCOLS;
 
 class ZMQContext : public Context {
 private:
@@ -46,6 +46,7 @@ class ZMQPubSocket : public PubSocket {
 private:
   void * sock;
   std::string full_endpoint;
+  int pid = -1;
 public:
   int connect(Context *context, std::string endpoint, bool check_endpoint=true);
   int sendMessage(Message *message);
@@ -63,5 +64,5 @@ private:
 public:
   void registerSocket(SubSocket *socket);
   std::vector<SubSocket*> poll(int timeout);
-  ~ZMQPoller(){};
+  ~ZMQPoller(){}
 };

@@ -5,8 +5,8 @@
 #include <csignal>
 #include <cerrno>
 
-#include "services.h"
-#include "impl_msgq.h"
+#include "cereal/services.h"
+#include "cereal/messaging/impl_msgq.h"
 
 
 volatile sig_atomic_t msgq_do_exit = 0;
@@ -17,12 +17,7 @@ void sig_handler(int signal) {
 }
 
 static bool service_exists(std::string path){
-  for (const auto& it : services) {
-    if (it.name == path) {
-      return true;
-    }
-  }
-  return false;
+  return services.count(path) > 0;
 }
 
 
