@@ -43,7 +43,7 @@ def build_header():
   h += "#define __SERVICES_H\n"
   h += "struct service { char name[0x100]; int port; bool should_log; int frequency; int decimation; bool keep_last;};\n"
   h += "static struct service services[] = {\n"
-  for k, v in service_list.items():
+  for k, v in SERVICE_LIST.items():
     should_log = "true" if v.should_log else "false"
     keep_last = "true" if v.keep_last else "false"
     decimation = -1 if v.decimation is None else v.decimation

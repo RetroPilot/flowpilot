@@ -2,6 +2,10 @@ SCRIPT=$(realpath "$0")
 DIR=$(dirname "$SCRIPT")
 ARCHNAME=$(arch)
 
+if [ -f /data/data/com.termux/files/retros_setup_complete ]; then
+  PREFIX=/usr
+fi
+
 if [ ! -d capnproto-java/ ]; then
   git clone https://github.com/capnproto/capnproto-java.git $DIR/capnproto-java
 fi
